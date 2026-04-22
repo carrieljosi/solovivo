@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoloVivo - AgTech Protótipo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .esconder { display: none !important; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 10px; }
+        .bg-img-login { background-image: url('https://images.unsplash.com/photo-1592982537447-6f2a6a0c5c13?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); }
+        .foto-praga { height: 120px; width: 120px; min-width: 120px; object-fit: cover; border-radius: 0.5rem; }
+        .foto-solo { height: 190px; width: 100%; object-fit: cover; }
+    </style>
+</head>
+<body class="bg-stone-100 font-sans text-stone-800">
+
+    <div id="telaLogin" class="min-h-screen flex items-center justify-center p-4 bg-img-login bg-cover bg-center">
+        <div class="absolute inset-0 bg-black bg-opacity-70"></div>
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md relative z-10 border-t-8 border-green-600">
+            <div class="text-center mb-8">
+                <div class="text-6xl mb-2">🌱</div>
+                <h1 class="text-4xl font-extrabold text-green-700 tracking-tight">SoloVivo</h1>
+            </div>
+            
+            <form id="formAcesso" onsubmit="entrar(event)">
+                <h2 class="text-lg font-bold text-stone-600 mb-4 text-center">Acesse sua conta</h2>
+                <div class="mb-4">
+                    <label class="block text-stone-700 font-bold mb-2">Usuário</label>
+                    <input type="text" id="loginUsuario" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-green-500 bg-stone-50" placeholder="Digite seu usuário" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-stone-700 font-bold mb-2">Senha</label>
+                    <input type="password" id="loginSenha" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-green-500 bg-stone-50" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-green-700 shadow-lg transition">Entrar</button>
+                <p class="text-center mt-4 text-sm text-stone-500">Ainda não tem conta? <a href="#" onclick="alternarLoginCadastro(true)" class="text-green-700 font-bold hover:underline">Criar Cadastro</a></p>
+            </form>
+
+            <form id="formCadastro" class="esconder" onsubmit="criarConta(event)">
+                <h2 class="text-lg font-bold text-green-700 mb-4 text-center">Crie sua Conta Grátis</h2>
+                <div class="mb-3">
+                    <label class="block text-stone-700 font-bold mb-1 text-sm">Nome Completo</label>
+                    <input type="text" id="cadNome" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-green-500 bg-stone-50" required>
+                </div>
+                <div class="mb-3">
+                    <label class="block text-stone-700 font-bold mb-1 text-sm">Usuário</label>
+                    <input type="text" id="cadEmail" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-green-500 bg-stone-50" required>
+                </div>
+                <div class="mb-5">
+                    <label class="block text-stone-700 font-bold mb-1 text-sm">Senha</label>
+                    <input type="password" id="cadSenha" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-green-500 bg-stone-50" required>
+                </div>
+                <button type="submit" class="w-full bg-green-800 text-white font-bold py-3 px-4 rounded-xl hover:bg-green-900 shadow-lg transition">Finalizar Cadastro</button>
+                <p class="text-center mt-4 text-sm text-stone-500">Já possui conta? <a href="#" onclick="alternarLoginCadastro(false)" class="text-green-700 font-bold hover:underline">Fazer Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="telaPainel" class="esconder min-h-screen flex flex-col">
+        <nav class="bg-green-700 text-white p-4 shadow-md sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div class="flex items-center gap-2 cursor-pointer" onclick="navegar('menuPrincipal')">
+                    <span class="text-2xl">🌱</span>
+                    <h1 class="text-2xl font-bold">SoloVivo</h1>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span id="nomeUserDisplay" class="font-medium text-green-100 text-sm md:text-base"></span>
+                    <button onclick="sair()" class="bg-green-800 hover:bg-red-600 px-3 py-2 rounded font-bold transition text-sm">Sair</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="flex-grow p-4 md:p-6 max-w-7xl mx-auto w-full">
+            
+            <div id="menuPrincipal" class="tela-app">
+                <h2 class="text-2xl font-bold text-stone-800 mb-6 border-b-2 border-green-200 pb-2">Painel de Controle</h2>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
+                    <button onclick="navegar('modPlantio')" class="bg-white p-4 rounded-xl shadow border-b-4 border-green-500 flex flex-col items-center gap-2 hover:-translate-y-1 transition">
+                        <div class="text-4xl">🚜</div><span class="font-bold text-stone-700 text-center text-sm">Plantio</span>
+                    </button>
+                    <button onclick="navegar('modCotacoes')" class="bg-white p-4 rounded-xl shadow border-b-4 border-emerald-500 flex flex-col items-center gap-2 hover:-translate-y-1 transition">
+                        <div class="text-4xl">📈</div><span class="font-bold text-stone-700 text-center text-sm">Cotações</span>
+                    </button>
+                    <button onclick="navegar('modManejo')" class="bg-white p-4 rounded-xl shadow border-b-4 border-blue-500 flex flex-col items-center gap-2 hover:-translate-y-1 transition">
+                        <div class="text-4xl">💧</div><span class="font-bold text-stone-700 text-center text-sm">Manejo Info.</span>
+                    </button>
+                    <button onclick="navegar('modFinanceiro')" class="bg-white p-4 rounded-xl shadow border-b-4 border-yellow-500 flex flex-col items-center gap-2 hover:-translate-y-1 transition">
+                        <div class="text-4xl">💰</div><span class="font-bold text-stone-700 text-center text-sm">Despesas</span>
+                    </button>
+                    <button onclick="navegar('modPragas')" class="bg-white p-4 rounded-xl shadow border-b-4 border-red-500 flex flex-col items-center gap-2 hover:-translate-y-1 transition">
+                        <div class="text-4xl">🐛</div><span class="font-bold text-stone-700 text-center text-sm">Pragas</span>
+                    </button>
+                    <button onclick="navegar('modGaleria')" class="bg-white p-4 rounded-xl shadow border-b-4 border-orange-500 flex flex-col items-center gap-2 hover:-translate-y-1 transition">
+                        <div class="text-4xl">📖</div><span class="font-bold text-stone-700 text-center text-sm">Solos</span>
+                    </button>
+                </div>
+
+                <h3 class="text-xl font-bold text-stone-800 mb-4 border-b-2 border-stone-200 pb-2 flex items-center gap-2">🗓️ Últimas Lavouras e Previsões</h3>
+                <div id="dashHistorico" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    </div>
+            </div>
+
+            <div id="modCotacoes" class="tela-app esconder bg-white p-6 rounded-2xl shadow-sm border-t-4 border-emerald-500">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-stone-800 flex items-center gap-2">📈 Cotações Agrícolas</h2>
+                    <button onclick="navegar('menuPrincipal')" class="text-stone-500 font-bold bg-stone-100 px-3 py-1 rounded">Voltar</button>
+                </div>
+                
+                <div class="mb-6 relative">
+                    <input type="text" id="buscaCotacao" onkeyup="filtrarCotacoes()" placeholder="Pesquise a safra (ex: Milho, Soja...)" class="w-full p-4 border-2 border-emerald-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none font-bold text-stone-700">
+                    <span class="absolute right-4 top-4 text-emerald-500">🔍</span>
+                </div>
+
+                <div id="listaCotacoes" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    </div>
+            </div>
+
+            <div id="modPlantio" class="tela-app esconder bg-white p-6 rounded-2xl shadow-sm border-t-4 border-green-500">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-stone-800 flex items-center gap-2">🚜 Plantio e Lavouras</h2>
+                    <button onclick="navegar('menuPrincipal')" class="text-stone-500 font-bold bg-stone-100 px-3 py-1 rounded">Voltar</button>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                    <div class="lg:col-span-2 bg-stone-50 p-6 rounded-xl border border-stone-200">
+                        <h3 class="font-bold mb-4 border-b pb-2">Registrar Lavoura</h3>
+                        <form onsubmit="salvarPlantio(event)">
+                            <label class="block text-sm font-bold mb-1">Cultura</label>
+                            <select id="plCultura" class="w-full p-2 border rounded mb-3" required>
+                                <option value="Milho">Milho</option>
+                                <option value="Soja">Soja</option>
+                                <option value="Feijão">Feijão</option>
+                                <option value="Alface">Alface</option>
+                                <option value="Tomate">Tomate</option>
+                            </select>
+
+                            <label class="block text-sm font-bold mb-1">Tipo de Solo da Área</label>
+                            <select id="plSolo" class="w-full p-2 border rounded mb-3" required>
+                                <option value="Latossolo (Terra Roxa)">Latossolo (Terra Roxa/Vermelha)</option>
+                                <option value="Arenoso">Solo Arenoso</option>
+                                <option value="Argiloso">Solo Argiloso</option>
+                                <option value="Gleissolo (Várzea)">Gleissolo (Várzea)</option>
+                            </select>
+
+                            <label class="block text-sm font-bold mb-1">Data do Plantio</label>
+                            <input type="date" id="plData" class="w-full p-2 border rounded mb-3" required>
+
+                            <label class="block text-sm font-bold mb-1">Área (Hectares)</label>
+                            <input type="number" step="0.01" id="plArea" class="w-full p-2 border rounded mb-4" required>
+
+                            <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700">Salvar Lavoura e Calcular Colheita</button>
+                        </form>
+                    </div>
+
+                    <div class="lg:col-span-3">
+                        <h3 class="font-bold mb-4 border-b pb-2 text-green-800">Histórico e Previsões</h3>
+                        <div id="listaHistorico" class="space-y-4 max-h-[500px] overflow-y-auto pr-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modManejo" class="tela-app esconder bg-white p-6 rounded-2xl shadow-sm border-t-4 border-blue-500">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-stone-800 flex items-center gap-2">💧 Manejo Inteligente</h2>
+                    <button onclick="navegar('menuPrincipal')" class="text-stone-500 font-bold bg-stone-100 px-3 py-1 rounded">Voltar</button>
+                </div>
+                
+                <select id="selectManejo" class="w-full p-3 border-blue-300 border-2 rounded-lg mb-6 text-lg font-bold text-blue-900" onchange="calcularManejo()"></select>
+
+                <div id="resultadoManejo" class="esconder">
+                    <div class="bg-stone-800 text-white p-4 rounded-t-xl flex justify-between items-center">
+                        <div>
+                            <h3 id="manFase" class="text-xl font-bold text-green-400"></h3>
+                            <p id="manContexto" class="text-sm text-stone-300"></p>
+                        </div>
+                        <div class="text-right">
+                            <p id="manDias" class="text-3xl font-black"></p>
+                            <p class="text-xs uppercase tracking-wider">Dias de Vida</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div class="bg-blue-50 p-5 rounded-xl border border-blue-200">
+                            <h4 class="font-black text-xl text-blue-900 flex items-center gap-2 mb-4 border-b border-blue-200 pb-2">Guia de Irrigação</h4>
+                            <div id="manIrrigacao" class="text-stone-700 text-sm leading-relaxed space-y-2"></div>
+                        </div>
+                        <div class="bg-green-50 p-5 rounded-xl border border-green-200">
+                            <h4 class="font-black text-xl text-green-900 flex items-center gap-2 mb-4 border-b border-green-200 pb-2">Guia de Nutrição</h4>
+                            <div id="manAdubo" class="text-stone-700 text-sm leading-relaxed space-y-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modFinanceiro" class="tela-app esconder bg-white p-6 rounded-2xl shadow-sm border-t-4 border-yellow-500">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-stone-800 flex items-center gap-2">💰 Custos e Despesas Detalhadas</h2>
+                    <button onclick="navegar('menuPrincipal')" class="text-stone-500 font-bold bg-stone-100 px-3 py-1 rounded">Voltar</button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-stone-50 p-6 rounded-xl border">
+                        <label class="block font-bold mb-4 text-sm text-stone-800">1. Selecione a Lavoura</label>
+                        <select id="finLavoura" class="w-full p-3 border rounded-lg mb-6" onchange="calcularLucro()"></select>
+
+                        <h3 class="font-bold mb-4 border-b pb-2">2. Detalhamento de Despesas (R$)</h3>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-xs font-bold mb-1 text-stone-600">Sementes / Mudas</label>
+                                <input type="number" id="despSemente" class="w-full p-2 border rounded input-despesa" oninput="calcularLucro()" placeholder="0,00">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold mb-1 text-stone-600">Fertilizantes/Adubo</label>
+                                <input type="number" id="despFertilizante" class="w-full p-2 border rounded input-despesa" oninput="calcularLucro()" placeholder="0,00">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold mb-1 text-stone-600">Defensivos/Pragas</label>
+                                <input type="number" id="despDefensivo" class="w-full p-2 border rounded input-despesa" oninput="calcularLucro()" placeholder="0,00">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold mb-1 text-stone-600">Mão de Obra</label>
+                                <input type="number" id="despMaoObra" class="w-full p-2 border rounded input-despesa" oninput="calcularLucro()" placeholder="0,00">
+                            </div>
+                            <div class="col-span-2">
+                                <label class="block text-xs font-bold mb-1 text-stone-600">Combustível / Maquinário</label>
+                                <input type="number" id="despMaquinario" class="w-full p-2 border rounded input-despesa" oninput="calcularLucro()" placeholder="0,00">
+                            </div>
+                        </div>
+
+                        <label class="block font-bold mt-6 mb-2 text-sm text-stone-800">3. Preço de Venda Esperado (R$ por Kg)</label>
+                        <input type="number" step="0.10" id="finPreco" class="w-full p-3 border rounded-lg" placeholder="Ex: 2.10" oninput="calcularLucro()">
+                    </div>
+
+                    <div class="bg-yellow-50 p-6 rounded-xl border border-yellow-200 flex flex-col justify-center">
+                        <h3 class="font-bold text-yellow-900 text-xl mb-6 text-center border-b border-yellow-300 pb-2">Demonstrativo de Resultado</h3>
+                        
+                        <div class="flex justify-between mb-2">
+                            <span class="text-stone-600">Receita Bruta Esperada</span>
+                            <span id="resReceita" class="font-bold text-stone-800">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between mb-4 border-b border-yellow-300 pb-4">
+                            <span class="text-red-600">(-) Total de Despesas</span>
+                            <span id="resDespesas" class="font-bold text-red-600">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-white p-4 rounded-lg shadow-sm">
+                            <span class="text-sm font-bold text-stone-800 uppercase">Lucro Líquido</span>
+                            <span id="resLucro" class="text-3xl font-black text-green-600">R$ 0,00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modPragas" class="tela-app esconder bg-white p-6 rounded-2xl shadow-sm border-t-4 border-red-500">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-stone-800 flex items-center gap-2">🐛 Identificação de Pragas</h2>
+                    <button onclick="navegar('menuPrincipal')" class="text-stone-500 font-bold bg-stone-100 px-3 py-1 rounded">Voltar</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="border rounded-xl flex items-center p-4 bg-stone-50 gap-4">
+                        <img src="https://images.unsplash.com/photo-1518568740560-333139ec1706?auto=format&fit=crop&w=500&q=60" alt="Lagarta" class="foto-praga shadow-sm border border-stone-200">
+                        <div>
+                            <h4 class="font-black text-lg text-stone-800">Lagarta-do-cartucho</h4>
+                            <p class="text-xs font-bold text-red-600 mb-1">Risco em: Milho | Estação: Verão/Seca</p>
+                            <p class="text-sm text-stone-700">Destrói as folhas novas. <strong>Controle:</strong> Aplicação de inseticida biológico (Bacillus) logo nas primeiras folhas raspadas.</p>
+                        </div>
+                    </div>
+                    <div class="border rounded-xl flex items-center p-4 bg-stone-50 gap-4">
+                        <img src="https://images.unsplash.com/photo-1544256718-3baf237fe4bb?auto=format&fit=crop&w=500&q=60" alt="Mosca Branca" class="foto-praga shadow-sm border border-stone-200">
+                        <div>
+                            <h4 class="font-black text-lg text-stone-800">Mosca-branca</h4>
+                            <p class="text-xs font-bold text-red-600 mb-1">Risco em: Soja/Feijão | Estação: Calor extremo</p>
+                            <p class="text-sm text-stone-700">Fica sob a folha sugando seiva. <strong>Controle:</strong> Rotação de culturas e armadilhas amarelas com cola nas bordas do plantio.</p>
+                        </div>
+                    </div>
+                    <div class="border rounded-xl flex items-center p-4 bg-stone-50 gap-4">
+                        <img src="https://images.unsplash.com/photo-1542614396-857dcbf21eb4?auto=format&fit=crop&w=500&q=60" alt="Percevejo" class="foto-praga shadow-sm border border-stone-200">
+                        <div>
+                            <h4 class="font-black text-lg text-stone-800">Percevejo Marrom</h4>
+                            <p class="text-xs font-bold text-red-600 mb-1">Risco em: Soja/Feijão | Fase: Enchimento</p>
+                            <p class="text-sm text-stone-700">Ataca a vagem e murcha o grão. <strong>Controle:</strong> Uso de pano-de-batida. Aplicar defensivo específico se houver mais de 2 por metro de pano.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modGaleria" class="tela-app esconder bg-white p-6 rounded-2xl shadow-sm border-t-4 border-orange-500">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-stone-800">📖 Galeria de Solos</h2>
+                    <button onclick="navegar('menuPrincipal')" class="text-stone-500 font-bold bg-stone-100 px-3 py-1 rounded">Voltar</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="border rounded-xl overflow-hidden shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1508244199992-0b1cc59c3e9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Latossolo" class="foto-solo">
+                        <div class="p-4 bg-stone-50"><h3 class="font-bold text-lg text-orange-900">Latossolo (Terra Roxa/Vermelha)</h3><p class="text-sm mt-2">Muito poroso e profundo. Coloração vermelho-escura forte. Excelente para agricultura intensa no interior do estado.</p></div>
+                    </div>
+                    <div class="border rounded-xl overflow-hidden shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1464684988775-8120d5f308ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Arenoso" class="foto-solo">
+                        <div class="p-4 bg-stone-50"><h3 class="font-bold text-lg text-yellow-800">Solo Arenoso</h3><p class="text-sm mt-2">Possui mais de 70% de areia. A água infiltra extremamente rápido. Perde nutrientes com facilidade (precisa de muita palhada).</p></div>
+                    </div>
+                    <div class="border rounded-xl overflow-hidden shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1622323381615-562a939f55de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Argiloso" class="foto-solo">
+                        <div class="p-4 bg-stone-50"><h3 class="font-bold text-lg text-stone-900">Solo Argiloso</h3><p class="text-sm mt-2">Solo pesado (muito barro). Fica pegajoso quando molhado e forma rachaduras profundas ao secar ao sol.</p></div>
+                    </div>
+                    <div class="border rounded-xl overflow-hidden shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1600827299042-45e05a8f4305?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gleissolo" class="foto-solo">
+                        <div class="p-4 bg-stone-50"><h3 class="font-bold text-lg text-blue-900">Gleissolo (Várzea)</h3><p class="text-sm mt-2">Solo mal drenado de baixadas ou perto de rios. Fica frequentemente alagado, apresentando cor acinzentada e escura.</p></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const bancoCotacoes = [
+            { produto: 'Soja (Saca 60kg)', preco: 125.50, praca: 'Itapetininga - SP', variacao: '▼ -1.2%', cor: 'text-red-500' },
+            { produto: 'Milho (Saca 60kg)', preco: 58.00, praca: 'Itapetininga - SP', variacao: '▲ +0.5%', cor: 'text-green-500' },
+            { produto: 'Feijão Carioca (60kg)', preco: 210.00, praca: 'Avaré - SP', variacao: '- 0.0%', cor: 'text-stone-500' },
+            { produto: 'Trigo (Tonelada)', preco: 1200.00, praca: 'Capão Bonito - SP', variacao: '▲ +1.1%', cor: 'text-green-500' },
+            { produto: 'Sorgo (Saca 60kg)', preco: 45.00, praca: 'Campinas - SP', variacao: '▼ -0.3%', cor: 'text-red-500' },
+            { produto: 'Tomate (Caixa 20kg)', preco: 85.00, praca: 'CEAGESP - SP', variacao: '▲ +5.0%', cor: 'text-green-500' }
+        ];
+
+        const CULTURAS = {
+            'Milho': { ciclo: 130, semKg: 20, colhKg: 6000 },
+            'Soja': { ciclo: 120, semKg: 60, colhKg: 3200 },
+            'Feijão': { ciclo: 90, semKg: 50, colhKg: 1500 },
+            'Alface': { ciclo: 60, semKg: 1, colhKg: 25000 },
+            'Tomate': { ciclo: 110, semKg: 0.5, colhKg: 60000 }
+        };
+
+        window.onload = function() {
+            if(localStorage.getItem('soloUserLogado')) {
+                const user = JSON.parse(localStorage.getItem('soloUserLogado'));
+                entrarSucesso(user.nome);
+            }
+            renderizarCotacoes(bancoCotacoes);
+        };
+
+        function alternarLoginCadastro(mostrarCadastro) {
+            if(mostrarCadastro) {
+                document.getElementById('formAcesso').classList.add('esconder');
+                document.getElementById('formCadastro').classList.remove('esconder');
+            } else {
+                document.getElementById('formCadastro').classList.add('esconder');
+                document.getElementById('formAcesso').classList.remove('esconder');
+            }
+        }
+
+        function criarConta(e) {
+            e.preventDefault();
+            const nome = document.getElementById('cadNome').value;
+            const usuario = document.getElementById('cadEmail').value;
+            const user = { nome: nome, usuario: usuario };
+            localStorage.setItem('soloUserLogado', JSON.stringify(user));
+            entrarSucesso(nome);
+        }
+
+        function entrar(e) {
+            e.preventDefault();
+            const usuario = document.getElementById('loginUsuario').value;
+            const user = { nome: usuario, usuario: usuario };
+            localStorage.setItem('soloUserLogado', JSON.stringify(user));
+            entrarSucesso(user.nome);
+        }
+
+        function entrarSucesso(nome) {
+            document.getElementById('nomeUserDisplay').innerText = "Olá, " + nome;
+            document.getElementById('telaLogin').classList.add('esconder');
+            document.getElementById('telaPainel').classList.remove('esconder');
+            atualizarTudo();
+        }
+
+        function sair() {
+            localStorage.removeItem('soloUserLogado');
+            document.getElementById('telaPainel').classList.add('esconder');
+            document.getElementById('telaLogin').classList.remove('esconder');
+        }
+
+        function navegar(id) {
+            document.querySelectorAll('.tela-app').forEach(t => t.classList.add('esconder'));
+            document.getElementById(id).classList.remove('esconder');
+            if(id === 'modManejo' || id === 'modFinanceiro') atualizarSelects();
+        }
+
+        function atualizarTudo() {
+            carregarPlantio();
+            carregarDashHistorico();
+            atualizarSelects();
+        }
+
+        function renderizarCotacoes(lista) {
+            const div = document.getElementById('listaCotacoes');
+            div.innerHTML = '';
+            lista.forEach(item => {
+                div.innerHTML += `
+                    <div class="bg-emerald-50 p-5 rounded-xl border border-emerald-200 shadow-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-bold text-stone-700">${item.produto}</span>
+                            <span class="${item.cor} font-bold text-sm">${item.variacao}</span>
+                        </div>
+                        <p class="text-3xl font-black text-emerald-900">R$ ${item.preco.toFixed(2).replace('.',',')}</p>
+                        <p class="text-xs text-stone-500 mt-2">Ref: ${item.praca}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function filtrarCotacoes() {
+            const termo = document.getElementById('buscaCotacao').value.toLowerCase();
+            const filtrado = bancoCotacoes.filter(c => c.produto.toLowerCase().includes(termo));
+            renderizarCotacoes(filtrado);
+        }
+
+        // --- PLANTIO E PREVISÃO DE COLHEITA ---
+        function salvarPlantio(e) {
+            e.preventDefault();
+            const cult = document.getElementById('plCultura').value;
+            const solo = document.getElementById('plSolo').value;
+            const dataStr = document.getElementById('plData').value;
+            const area = parseFloat(document.getElementById('plArea').value);
+            
+            const db = CULTURAS[cult];
+            const dataFim = new Date(dataStr + 'T00:00:00');
+            dataFim.setDate(dataFim.getDate() + db.ciclo);
+            const dataColheitaStr = dataFim.toISOString().split('T')[0];
+
+            const reg = {
+                id: Date.now(),
+                cultura: cult,
+                solo: solo,
+                dataStr: dataStr,
+                dataColheitaStr: dataColheitaStr,
+                area: area,
+                kgSemente: area * db.semKg,
+                kgColheita: area * db.colhKg
+            };
+
+            let banco = JSON.parse(localStorage.getItem('soloPlantio')) || [];
+            banco.unshift(reg);
+            localStorage.setItem('soloPlantio', JSON.stringify(banco));
+            e.target.reset();
+            atualizarTudo();
+            alert("Lavoura salva com sucesso!");
+        }
+
+        function carregarPlantio() {
+            const div = document.getElementById('listaHistorico');
+            let banco = JSON.parse(localStorage.getItem('soloPlantio')) || [];
+            if(banco.length === 0) { div.innerHTML = '<p class="text-stone-500">Nenhum plantio registrado.</p>'; return; }
+
+            div.innerHTML = '';
+            banco.forEach(i => {
+                const tipoSolo = i.solo ? i.solo : 'Não informado';
+                const previsaoColheita = i.dataColheitaStr ? i.dataColheitaStr.split('-').reverse().join('/') : 'Não calculada';
+
+                div.innerHTML += `
+                    <div class="bg-white p-5 rounded-lg border-l-8 border-green-500 shadow-sm relative">
+                        <button onclick="deletarLavoura(${i.id})" class="absolute top-2 right-2 text-red-400 text-xs font-bold hover:underline">Excluir</button>
+                        <div class="flex items-center gap-2 mb-2">
+                            <h4 class="font-black text-green-800 text-xl">${i.cultura}</h4>
+                            <span class="bg-stone-200 text-stone-700 text-xs px-2 py-1 rounded font-bold">${tipoSolo}</span>
+                        </div>
+                        <div class="flex flex-wrap gap-4 text-sm text-stone-600 mb-3 bg-stone-50 p-2 rounded">
+                            <p><strong>Área:</strong> ${i.area} Ha</p>
+                            <p><strong>Plantio:</strong> ${i.dataStr.split('-').reverse().join('/')}</p>
+                            <p class="text-red-700 font-bold"><strong>🌾 Colheita (Previsão):</strong> ${previsaoColheita}</p>
+                        </div>
+                        <div class="bg-green-50 p-3 rounded text-sm border border-green-100 flex justify-between">
+                            <span>Sementes Necessárias:<br><strong class="text-lg">${i.kgSemente} Kg</strong></span>
+                            <span class="text-right">Expectativa (Peso):<br><strong class="text-lg text-green-700">${(i.kgColheita).toLocaleString('pt-BR')} Kg</strong></span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // --- DASHBOARD (HISTÓRICO NA TELA INICIAL) ---
+        function carregarDashHistorico() {
+            const div = document.getElementById('dashHistorico');
+            let banco = JSON.parse(localStorage.getItem('soloPlantio')) || [];
+            if(banco.length === 0) { 
+                div.innerHTML = '<p class="text-stone-500 italic text-sm">Use o botão "Plantio" acima para registrar sua primeira lavoura.</p>'; 
+                return; 
+            }
+
+            div.innerHTML = '';
+            const ultimos = banco.slice(0, 3);
+            ultimos.forEach(i => {
+                const tipoSoloCurto = i.solo ? i.solo.split(' ')[0] : 'Não informado';
+                const previsaoColheita = i.dataColheitaStr ? i.dataColheitaStr.split('-').reverse().join('/') : 'Não calculada';
+                
+                div.innerHTML += `
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-stone-200 border-l-4 border-l-green-500">
+                        <h4 class="font-bold text-green-800">${i.cultura} <span class="text-xs text-stone-500 font-normal ml-2">(${i.area} Ha)</span></h4>
+                        <p class="text-xs text-stone-600 mt-1">Plantado em: ${i.dataStr.split('-').reverse().join('/')}</p>
+                        <p class="text-xs text-stone-600">Solo: ${tipoSoloCurto}</p>
+                        <p class="text-xs text-red-600 font-bold mt-1">🌾 Colheita Prevista: ${previsaoColheita}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function deletarLavoura(id) {
+            let banco = JSON.parse(localStorage.getItem('soloPlantio'));
+            banco = banco.filter(b => b.id !== id);
+            localStorage.setItem('soloPlantio', JSON.stringify(banco));
+            atualizarTudo();
+        }
+
+        function atualizarSelects() {
+            const banco = JSON.parse(localStorage.getItem('soloPlantio')) || [];
+            let html = '<option value="">Selecione a lavoura cadastrada...</option>';
+            banco.forEach(i => {
+                const tipoSoloCurto = i.solo ? i.solo.split(' ')[0] : 'ND';
+                html += `<option value="${i.id}">${i.cultura} (${i.area} Ha em ${tipoSoloCurto})</option>`;
+            });
+            document.getElementById('selectManejo').innerHTML = html;
+            document.getElementById('finLavoura').innerHTML = html;
+        }
+
+        // --- MANEJO INTELIGENTE ---
+        function calcularManejo() {
+            const id = parseInt(document.getElementById('selectManejo').value);
+            const box = document.getElementById('resultadoManejo');
+            if(!id) { box.classList.add('esconder'); return; }
+
+            const lavoura = JSON.parse(localStorage.getItem('soloPlantio')).find(b => b.id === id);
+            const dataPlantio = new Date(lavoura.dataStr + 'T00:00:00');
+            const hoje = new Date();
+            let diasVida = Math.floor((hoje - dataPlantio) / (1000 * 3600 * 24));
+            if(diasVida < 0) diasVida = 0;
+
+            const cicloTotal = CULTURAS[lavoura.cultura].ciclo;
+            
+            let fase = "Crescimento Vegetativo";
+            if(diasVida < 20) fase = "Germinação / Estabelecimento Inicial";
+            else if(diasVida > (cicloTotal - 25)) fase = "Maturação / Ponto de Colheita";
+            else if(diasVida > (cicloTotal / 2.5)) fase = "Floração e Enchimento de Frutos/Grãos";
+
+            let mmDia = ""; let freqReg = ""; let fertConv = ""; let fertAlt = ""; let fertPorque = "";
+            const tipoSolo = lavoura.solo || "";
+
+            if(tipoSolo === "Arenoso") {
+                freqReg = "Diária ou a cada 2 dias (Baixa lâmina de água)";
+            } else if (tipoSolo.includes("Argiloso") || tipoSolo.includes("Latossolo")) {
+                freqReg = "A cada 3 a 5 dias (Alta lâmina de água)";
+            } else {
+                freqReg = "A cada 2 ou 3 dias";
+            }
+
+            if(fase.includes("Inicial")) {
+                mmDia = "2 a 3 mm por dia";
+                fertConv = "NPK com alta concentração de Fósforo (ex: Formulação 04-14-08)";
+                fertAlt = "Fosfato Natural Reativo, Farinha de Osso ou Bokashi";
+                fertPorque = "A planta precisa de muito <strong>Fósforo (P)</strong> agora para desenvolver raízes fortes e fundas, garantindo resistência contra secas futuras.";
+            } else if(fase.includes("Crescimento")) {
+                mmDia = "4 a 6 mm por dia";
+                fertConv = "Ureia ou Sulfato de Amônio (Cobertura de Nitrogênio)";
+                fertAlt = "Torta de Mamona, Esterco bovino curtido ou Adubação Verde (plantio consorciado com Crotalária)";
+                fertPorque = "O <strong>Nitrogênio (N)</strong> é vital agora para o crescimento das folhas e aumento da taxa de fotossíntese (produção de energia).";
+            } else if(fase.includes("Floração")) {
+                mmDia = "7 a 8 mm por dia (PICO MÁXIMO DE CONSUMO)";
+                if(tipoSolo === "Arenoso") freqReg = "Diária (rigorosa)";
+                fertConv = "Cloreto de Potássio (KCl)";
+                fertAlt = "Cinza de Madeira (aplicação no solo) ou Biofertilizante líquido natural via foliar";
+                fertPorque = "A planta demanda <strong>Potássio (K)</strong> para transportar os açúcares das folhas para os frutos/grãos, garantindo peso, tamanho e resistência a pragas.";
+            } else {
+                mmDia = "0 mm por dia (Suspender Irrigação)";
+                freqReg = "Não irrigar";
+                fertConv = "Não aplicar";
+                fertAlt = "Não aplicar";
+                fertPorque = "A planta encerrou a absorção pelas raízes e precisa iniciar o processo de secagem (senescência) para a colheita, evitando fungos e podridão no silo.";
+            }
+
+            let textIrriPorque = "";
+            if(tipoSolo === "Arenoso") textIrriPorque = "Solos arenosos possuem macroporos e a água infiltra muito rápido (>50mm/h). Se você der muita água de uma vez, ela 'lava' o adubo para longe da raiz. Por isso a rega deve ser frequente, mas em pouca quantidade.";
+            else if(tipoSolo.includes("Argiloso")) textIrriPorque = "Solos argilosos retêm muita umidade nos microporos e a infiltração é lenta (<15mm/h). Irrigar todo dia causa falta de oxigênio na raiz (hipóxia). Regue com mais volume e dê dias de intervalo.";
+            else textIrriPorque = "Irrigação padrão de manutenção. Mantenha a capacidade de campo observando o clima local.";
+
+            box.classList.remove('esconder');
+            document.getElementById('manFase').innerText = fase;
+            document.getElementById('manContexto').innerText = `Lavoura de ${lavoura.cultura} - ${tipoSolo || 'Solo não informado'}`;
+            document.getElementById('manDias').innerText = diasVida;
+
+            document.getElementById('manIrrigacao').innerHTML = `
+                <p><strong class="text-blue-900">Demanda Hídrica:</strong> ${mmDia}</p>
+                <p><strong class="text-blue-900">Frequência Correta:</strong> ${freqReg}</p>
+                <p class="mt-2 text-stone-600 text-xs p-2 bg-white rounded border border-blue-100"><strong>Por que regar assim?</strong> ${textIrriPorque}</p>
+            `;
+
+            document.getElementById('manAdubo').innerHTML = `
+                <p><strong class="text-green-900">Adubo Mineral (Convencional):</strong> ${fertConv}</p>
+                <p><strong class="text-green-900">Adubo Orgânico (Alternativa Sustentável):</strong> ${fertAlt}</p>
+                <p class="mt-2 text-stone-600 text-xs p-2 bg-white rounded border border-green-100"><strong>Por que usar agora?</strong> ${fertPorque}</p>
+            `;
+        }
+
+        // --- FINANCEIRO ---
+        function calcularLucro() {
+            const id = parseInt(document.getElementById('finLavoura').value);
+            const semente = parseFloat(document.getElementById('despSemente').value) || 0;
+            const adubo = parseFloat(document.getElementById('despFertilizante').value) || 0;
+            const defensivo = parseFloat(document.getElementById('despDefensivo').value) || 0;
+            const maoObra = parseFloat(document.getElementById('despMaoObra').value) || 0;
+            const maq = parseFloat(document.getElementById('despMaquinario').value) || 0;
+            const preco = parseFloat(document.getElementById('finPreco').value) || 0;
+
+            const txtRec = document.getElementById('resReceita');
+            const txtDesp = document.getElementById('resDespesas');
+            const txtLuc = document.getElementById('resLucro');
+
+            if(!id) {
+                txtRec.innerText = "R$ 0,00"; txtDesp.innerText = "R$ 0,00"; txtLuc.innerText = "R$ 0,00";
+                return;
+            }
+
+            const lavoura = JSON.parse(localStorage.getItem('soloPlantio')).find(b => b.id === id);
+            const totalDespesas = semente + adubo + defensivo + maoObra + maq;
+            const receita = lavoura.kgColheita * preco;
+            const lucro = receita - totalDespesas;
+
+            const formataDinheiro = (val) => val.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+
+            txtRec.innerText = formataDinheiro(receita);
+            txtDesp.innerText = formataDinheiro(totalDespesas);
+            txtLuc.innerText = formataDinheiro(lucro);
+
+            txtLuc.classList.replace('text-green-600', lucro < 0 ? 'text-red-600' : 'text-green-600');
+            txtLuc.classList.replace('text-red-600', lucro >= 0 ? 'text-green-600' : 'text-red-600');
+        }
+    </script>
+</body>
+</html>
