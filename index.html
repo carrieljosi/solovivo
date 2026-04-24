@@ -41,7 +41,9 @@
             background-attachment: scroll;
         }
         @media (min-width: 768px) {
-            .bg-login { background-attachment: fixed; }
+            .bg-login {
+                background-attachment: fixed;
+            }
         }
 
         /* Imagens padronizadas */
@@ -98,23 +100,7 @@
                 </div>
             </div>
             
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-3 mb-5">
-                <button id="tabEntrar" type="button" onclick="alternarTelaLogin(false)" class="w-full sm:w-auto px-5 py-3 rounded-3xl font-black uppercase tracking-widest text-emerald-900 bg-emerald-50 border border-emerald-200 shadow-sm hover:bg-emerald-100 transition-colors">Entrar</button>
-                <button id="tabCadastrar" type="button" onclick="alternarTelaLogin(true)" class="w-full sm:w-auto px-5 py-3 rounded-3xl font-black uppercase tracking-widest text-stone-600 bg-stone-100 border border-stone-200 shadow-sm hover:bg-stone-200 transition-colors">Cadastrar</button>
-            </div>
-
-            <form id="formCadastro" class="esconder space-y-4 mb-4" onsubmit="registrarNovaConta(event)">
-                <h2 class="text-xl font-black text-stone-800 text-center mb-4">Crie sua Conta Grátis</h2>
-                <input type="text" id="cadNome" placeholder="Nome completo" class="w-full px-4 py-3.5 border-2 border-stone-100 rounded-xl focus:border-emerald-500 outline-none bg-stone-50 font-bold" required>
-                <input type="email" id="cadEmail" placeholder="E-mail" class="w-full px-4 py-3.5 border-2 border-stone-100 rounded-xl focus:border-emerald-500 outline-none bg-stone-50 font-bold" required>
-                <input type="password" id="cadSenha1" placeholder="Crie uma senha" class="w-full px-4 py-3.5 border-2 border-stone-100 rounded-xl focus:border-emerald-500 outline-none bg-stone-50 font-bold" required>
-                <input type="password" id="cadSenha2" placeholder="Confirme a senha" class="w-full px-4 py-3.5 border-2 border-stone-100 rounded-xl focus:border-emerald-500 outline-none bg-stone-50 font-bold" required>
-                <p id="msgErroSenha" class="text-red-500 text-xs font-bold text-center esconder bg-red-50 py-2 rounded-lg">⚠️ As senhas não batem.</p>
-                <button type="submit" class="w-full bg-stone-800 text-white font-black text-lg py-4 rounded-xl hover:bg-stone-900 active:scale-[0.98] transition-all mt-2">Cadastrar</button>
-                <p class="text-center text-stone-500 font-bold text-sm mt-2"><a href="#" onclick="alternarTelaLogin(false)" class="text-emerald-600 underline">Voltar ao Login</a></p>
-            </form>
-
-            <form id="formEntrada" onsubmit="realizarLogin(event)" class="space-y-4">
+            <form id="formEntrada" onsubmit="realizarLogin(event)" class="space-y-4 mt-6">
                 <div>
                     <label class="block text-stone-500 font-bold mb-1 text-xs uppercase ml-1 tracking-widest">Usuário</label>
                     <input type="text" id="inpUsuario" class="w-full px-5 py-4 border-2 border-stone-100 rounded-xl focus:border-emerald-500 outline-none bg-stone-50 text-stone-800 font-bold transition-colors" placeholder="Nome de acesso" required>
@@ -128,6 +114,17 @@
                 </button>
                 <p class="text-center text-stone-500 font-bold text-sm pt-2">Novo por aqui? <a href="#" onclick="alternarTelaLogin(true)" class="text-emerald-600 hover:text-emerald-800 underline">Criar Conta</a></p>
             </form>
+
+            <form id="formCadastro" class="esconder space-y-4 mt-4" onsubmit="registrarNovaConta(event)">
+                <h2 class="text-xl font-black text-stone-800 text-center mb-4">Crie sua Conta Grátis</h2>
+                <input type="text" id="cadNome" placeholder="Nome completo" class="w-full px-4 py-3.5 border-2 border-stone-100 rounded-xl focus:border-emerald-500 outline-none bg-stone-50 font-bold" required>
+                <input type="email" id="cadEmail" placeholder="E-mail" class="w-full px-4 py-3.5 border-2 border-stone-100 rounded-xl focus:border-emerald-500 outline-none bg-stone-50 font-bold" required>
+                <input type="password" id="cadSenha1" placeholder="Crie uma senha" class="w-full px-4 py-3.5 border-2 border-stone-100 rounded-xl focus:border-emerald-500 outline-none bg-stone-50 font-bold" required>
+                <input type="password" id="cadSenha2" placeholder="Confirme a senha" class="w-full px-4 py-3.5 border-2 border-stone-100 rounded-xl focus:border-emerald-500 outline-none bg-stone-50 font-bold" required>
+                <p id="msgErroSenha" class="text-red-500 text-xs font-bold text-center esconder bg-red-50 py-2 rounded-lg">⚠️ As senhas não batem.</p>
+                <button type="submit" class="w-full bg-stone-800 text-white font-black text-lg py-4 rounded-xl hover:bg-stone-900 active:scale-[0.98] transition-all mt-2">Cadastrar</button>
+                <p class="text-center text-stone-500 font-bold text-sm mt-2"><a href="#" onclick="alternarTelaLogin(false)" class="text-emerald-600 underline">Voltar ao Login</a></p>
+            </form>
         </div>
     </div>
 
@@ -138,11 +135,10 @@
                 <div class="flex items-center gap-3">
                     <div class="bg-emerald-50 p-2 rounded-xl border border-emerald-100"><span class="text-2xl">🌱</span></div>
                     <div>
-                        <h1 class="text-2xl font-black text-emerald-900 leading-none tracking-tight">SoloVivo</h1>
-                        <p id="lblNomeFazenda" class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mt-1">Propriedade ND</p>
+                            <h1 class="text-2xl md:text-3xl font-black text-emerald-900 leading-none tracking-tight">SoloVivo</h1>
+                            <p id="lblNomeFazenda" class="text-[10px] md:text-[11px] text-stone-400 font-bold uppercase tracking-widest mt-1">Propriedade ND</p>
                     </div>
                 </div>
-                
                 <div class="hidden md:flex items-center gap-3 bg-stone-50 border border-stone-200 px-5 py-2.5 rounded-2xl">
                     <span id="lblIconeClima" class="text-2xl">📡</span>
                     <div>
@@ -160,61 +156,45 @@
 
         <main class="flex-grow p-4 md:p-8 max-w-7xl mx-auto w-full space-y-8">
             
-            <div class="md:hidden bg-white border border-stone-200 px-5 py-5 rounded-[2rem] shadow-sm">
-                <div class="flex items-center justify-between gap-3 mb-4">
+            <div class="md:hidden bg-white border border-stone-200 px-4 py-4 rounded-3xl shadow-sm">
+                <div class="flex items-center gap-3 mb-3">
+                    <span id="lblIconeClimaMobile" class="text-2xl">📡</span>
                     <div>
-                        <p class="text-xs font-black uppercase tracking-widest text-emerald-600">Resumo Rápido</p>
-                        <h2 class="text-lg font-black text-stone-900 leading-tight">Seu sistema já está pronto para usar</h2>
+                        <p class="text-[10px] font-black text-emerald-600 uppercase tracking-widest" id="lblLocalFazendaMobile">Local ND</p>
+                        <p class="text-sm font-bold text-stone-700 leading-snug" id="lblDescClimaMobile">Conectando radares...</p>
                     </div>
-                    <span class="text-3xl">📈</span>
                 </div>
-                <div class="grid grid-cols-1 gap-3 text-sm text-stone-700">
-                    <div class="bg-emerald-50 border border-emerald-100 rounded-3xl p-4">
-                        <strong>Plataforma adaptada para seu celular</strong>
-                        <p class="mt-2">Design responsivo para navegação simples e rápida.</p>
-                    </div>
-                    <div class="bg-stone-50 border border-stone-100 rounded-3xl p-4">
-                        <strong>Cadastro e login juntos</strong>
-                        <p class="mt-2">Use os botões no topo para alternar entre Entrar e Cadastrar.</p>
-                    </div>
-                    <div class="bg-amber-50 border border-amber-100 rounded-3xl p-4">
-                        <strong>Clima e propriedade</strong>
-                        <p class="mt-2">Toque em Configurações para atualizar os dados da fazenda.</p>
-                    </div>
+                <div class="bg-stone-50 text-stone-700 p-4 rounded-3xl border border-stone-100 text-sm leading-relaxed">
+                    <p class="font-black mb-2">Resumo rápido</p>
+                    <p class="text-[13px]">Toque nos cards abaixo para acessar planejamento, lavoura, finanças, pragas e solos.</p>
                 </div>
             </div>
 
-            <section class="mb-6">
-                <button onclick="abrirJanela('modalPerfil')" class="w-full card-soft flex flex-row items-center justify-between gap-4 p-6 bg-emerald-600 text-white border-none hover:bg-emerald-700 active:scale-[0.98] transition-transform shadow-lg rounded-[2rem]">
-                    <div>
-                        <p class="text-sm uppercase tracking-widest font-black text-emerald-100">Cadastro da Propriedade</p>
-                        <h2 class="text-2xl font-black">Atualize dados, área e maquinário disponível</h2>
-                    </div>
-                    <span class="text-4xl">🏡</span>
-                </button>
-            </section>
-
             <section>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-                    <button onclick="abrirJanela('modalPlanejamento')" class="card-soft flex flex-col items-center justify-center p-6 gap-3 group active:scale-95 border-t-4 border-blue-400">
-                        <div class="bg-blue-50 text-blue-600 p-4 rounded-2xl text-3xl group-hover:bg-blue-100 transition-colors">📝</div>
-                        <span class="text-sm font-black text-stone-700 uppercase tracking-wide">Planejar</span>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                    <button onclick="abrirJanela('modalPlanejamento')" class="card-soft flex flex-col items-center justify-center p-4 gap-2 group active:scale-95 border-t-4 border-blue-400">
+                        <div class="bg-blue-50 text-blue-600 p-3 rounded-2xl text-2xl group-hover:bg-blue-100 transition-colors">📝</div>
+                        <span class="text-[11px] sm:text-sm font-black text-stone-700 uppercase tracking-wide">Planejar</span>
                     </button>
-                    <button onclick="abrirJanela('modalPlantio')" class="card-soft flex flex-col items-center justify-center p-6 gap-3 group active:scale-95 border-t-4 border-emerald-400">
-                        <div class="bg-emerald-50 text-emerald-600 p-4 rounded-2xl text-3xl group-hover:bg-emerald-100 transition-colors">🌱</div>
-                        <span class="text-sm font-black text-stone-700 uppercase tracking-wide">Lavoura</span>
+                    <button onclick="abrirJanela('modalPlantio')" class="card-soft flex flex-col items-center justify-center p-4 gap-2 group active:scale-95 border-t-4 border-emerald-400">
+                        <div class="bg-emerald-50 text-emerald-600 p-3 rounded-2xl text-2xl group-hover:bg-emerald-100 transition-colors">🌱</div>
+                        <span class="text-[11px] sm:text-sm font-black text-stone-700 uppercase tracking-wide">Lavoura</span>
                     </button>
-                    <button onclick="abrirJanela('modalDespesas')" class="card-soft flex flex-col items-center justify-center p-6 gap-3 group active:scale-95 border-t-4 border-amber-400">
-                        <div class="bg-amber-50 text-amber-600 p-4 rounded-2xl text-3xl group-hover:bg-amber-100 transition-colors">💰</div>
-                        <span class="text-sm font-black text-stone-700 uppercase tracking-wide">Financeiro</span>
+                    <button onclick="abrirJanela('modalDespesas')" class="card-soft flex flex-col items-center justify-center p-4 gap-2 group active:scale-95 border-t-4 border-amber-400">
+                        <div class="bg-amber-50 text-amber-600 p-3 rounded-2xl text-2xl group-hover:bg-amber-100 transition-colors">💰</div>
+                        <span class="text-[11px] sm:text-sm font-black text-stone-700 uppercase tracking-wide">Financeiro</span>
                     </button>
-                    <button onclick="abrirJanela('modalPragas')" class="card-soft flex flex-col items-center justify-center p-6 gap-3 group active:scale-95 border-t-4 border-red-400">
-                        <div class="bg-red-50 text-red-600 p-4 rounded-2xl text-3xl group-hover:bg-red-100 transition-colors">🐛</div>
-                        <span class="text-sm font-black text-stone-700 uppercase tracking-wide">Pragas</span>
+                    <button onclick="abrirJanela('modalPragas')" class="card-soft flex flex-col items-center justify-center p-4 gap-2 group active:scale-95 border-t-4 border-red-400">
+                        <div class="bg-red-50 text-red-600 p-3 rounded-2xl text-2xl group-hover:bg-red-100 transition-colors">🐛</div>
+                        <span class="text-[11px] sm:text-sm font-black text-stone-700 uppercase tracking-wide">Pragas</span>
                     </button>
-                    <button onclick="abrirJanela('modalSolos')" class="card-soft flex flex-col items-center justify-center p-6 gap-3 group active:scale-95 border-t-4 border-orange-400">
-                        <div class="bg-orange-50 text-orange-600 p-4 rounded-2xl text-3xl group-hover:bg-orange-100 transition-colors">📖</div>
-                        <span class="text-sm font-black text-stone-700 uppercase tracking-wide">Solos</span>
+                    <button onclick="abrirJanela('modalSolos')" class="card-soft flex flex-col items-center justify-center p-4 gap-2 group active:scale-95 border-t-4 border-orange-400">
+                        <div class="bg-orange-50 text-orange-600 p-3 rounded-2xl text-2xl group-hover:bg-orange-100 transition-colors">📖</div>
+                        <span class="text-[11px] sm:text-sm font-black text-stone-700 uppercase tracking-wide">Solos</span>
+                    </button>
+                    <button onclick="abrirJanela('modalPerfil')" class="card-soft md:col-span-5 col-span-2 flex flex-row items-center justify-center p-4 gap-3 active:scale-95 bg-stone-800 text-white border-none hover:bg-stone-700">
+                        <span class="text-xl">⚙️</span>
+                        <span class="text-[11px] sm:text-sm font-black uppercase tracking-widest text-stone-100">Configurações da Propriedade</span>
                     </button>
                 </div>
             </section>
@@ -228,12 +208,12 @@
             </div>
 
             <section class="pt-4">
-                <h2 class="text-xl font-black text-stone-800 mb-5 flex items-center gap-2">🚜 Monitoramento Ativo</h2>
+                <h2 class="text-xl md:text-2xl font-black text-stone-800 mb-5 flex items-center gap-2">🚜 Monitoramento Ativo</h2>
                 <div id="gridLavouras" class="grid grid-cols-1 lg:grid-cols-2 gap-6"></div>
             </section>
 
             <section class="pt-4">
-                <h2 class="text-xl font-black text-stone-800 mb-5 flex items-center gap-2">📋 Cronograma Estratégico</h2>
+                <h2 class="text-xl md:text-2xl font-black text-stone-800 mb-5 flex items-center gap-2">📋 Cronograma Estratégico</h2>
                 <div id="gridPlanejamentos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </section>
 
@@ -243,7 +223,7 @@
     <div id="modalPerfil" class="esconder fixed inset-0 z-50 flex items-center justify-center p-4 modal-bg">
         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-4xl overflow-hidden max-h-[90vh] flex flex-col">
             <div class="p-6 border-b border-stone-100 flex justify-between items-center bg-stone-50">
-                <h3 class="font-black text-xl text-stone-800 flex items-center gap-2">🏡 Cadastro da Propriedade</h3>
+                <h3 class="font-black text-xl text-stone-800 flex items-center gap-2">⚙️ Perfil da Propriedade</h3>
                 <button onclick="fecharJanela('modalPerfil')" class="w-10 h-10 bg-stone-200 text-stone-600 hover:bg-red-500 hover:text-white rounded-full flex items-center justify-center font-bold transition-colors text-xl">✕</button>
             </div>
             <div class="overflow-y-auto p-6 md:p-8 flex-grow">
@@ -278,17 +258,13 @@
                         <label class="block font-black text-base text-stone-600 mb-4 uppercase">Maquinário Disponível</label>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="listaMaquinas">
                             <label class="flex items-center gap-3 p-4 border-2 border-stone-100 rounded-xl bg-white text-sm font-bold cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 transition-colors"><input type="checkbox" value="Trator" class="accent-emerald-600 w-5 h-5"> Trator</label>
-                            <label class="flex items-center gap-3 p-4 border-2 border-stone-100 rounded-xl bg-white text-sm font-bold cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 transition-colors"><input type="checkbox" value="Colheitadeira" class="accent-emerald-600 w-5 h-5"> Colheitadeira</label>
-                            <label class="flex items-center gap-3 p-4 border-2 border-stone-100 rounded-xl bg-white text-sm font-bold cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 transition-colors"><input type="checkbox" value="Semeadeira" class="accent-emerald-600 w-5 h-5"> Semeadeira</label>
+                            <label class="flex items-center gap-3 p-4 border-2 border-stone-100 rounded-xl bg-white text-sm font-bold cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 transition-colors"><input type="checkbox" value="Colheitadeira" class="accent-emerald-600 w-5 h-5"> Colheita</label>
+                            <label class="flex items-center gap-3 p-4 border-2 border-stone-100 rounded-xl bg-white text-sm font-bold cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 transition-colors"><input type="checkbox" value="Semeadeira" class="accent-emerald-600 w-5 h-5"> Plantio</label>
                             <label class="flex items-center gap-3 p-4 border-2 border-stone-100 rounded-xl bg-white text-sm font-bold cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 transition-colors"><input type="checkbox" value="Pulverizador" class="accent-emerald-600 w-5 h-5"> Pulverizador</label>
-                            <label class="flex items-center gap-3 p-4 border-2 border-stone-100 rounded-xl bg-white text-sm font-bold cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 transition-colors"><input type="checkbox" value="Grade" class="accent-emerald-600 w-5 h-5"> Grade</label>
-                            <label class="flex items-center gap-3 p-4 border-2 border-stone-100 rounded-xl bg-white text-sm font-bold cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 transition-colors"><input type="checkbox" value="Roçadeira" class="accent-emerald-600 w-5 h-5"> Roçadeira</label>
-                            <label class="flex items-center gap-3 p-4 border-2 border-stone-100 rounded-xl bg-white text-sm font-bold cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 transition-colors"><input type="checkbox" value="Irrigador" class="accent-emerald-600 w-5 h-5"> Irrigador</label>
-                            <label class="flex items-center gap-3 p-4 border-2 border-stone-100 rounded-xl bg-white text-sm font-bold cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 transition-colors"><input type="checkbox" value="Drone Agrícola" class="accent-emerald-600 w-5 h-5"> Drone Agrícola</label>
                         </div>
                     </div>
                     <button type="submit" class="w-full bg-stone-800 text-white font-black text-base uppercase tracking-widest py-5 rounded-xl hover:bg-stone-900 shadow-md mt-6 active:scale-[0.98]">
-                        Salvar Cadastro
+                        Salvar Perfil
                     </button>
                 </form>
             </div>
@@ -654,26 +630,6 @@
                 ciclo: 100, variacao: '90 a 120 dias', semQtd: 2500, colhQtd: 30000, tipo: 'raiz', mesesIdeais: [4,5,6,7], unidade: 'Kg', 
                 fases: "<li><strong>0 a 20 dias:</strong> Quebra da dormência e brotação da semente.</li><li><strong>21 a 60 dias:</strong> Crescimento exuberante das ramas aéreas.</li><li><strong>61 a 100 dias:</strong> Tuberização profunda. Equilíbrio de rega para não apodrecer.</li>" 
             },
-            'Cevada': {
-                ciclo: 90, variacao: '80 a 100 dias', semQtd: 200, colhQtd: 4500, tipo: 'grao', mesesIdeais: [3,4,5], unidade: 'Kg',
-                fases: "<li><strong>0 a 20 dias:</strong> Germinação e estabelecimento de perfilhos.</li><li><strong>21 a 50 dias:</strong> Crescimento vegetativo com demanda de água moderada.</li><li><strong>51 a 90 dias:</strong> Espigamento e maturação rápida. Proteja de chuvas fortes na fase final.</li>"
-            },
-            'Tomate': {
-                ciclo: 120, variacao: '100 a 140 dias', semQtd: 35000, colhQtd: 80000, tipo: 'hortalica', mesesIdeais: [4,5,6,7,8,9,10,11], unidade: 'Kg',
-                fases: "<li><strong>0 a 20 dias:</strong> Muda e pegamento da raiz.</li><li><strong>21 a 60 dias:</strong> Formação de ramos e primeira floração.</li><li><strong>61 a 120 dias:</strong> Frutificação e colheitas sucessivas. Requer irrigação regular e suporte.</li>"
-            },
-            'Algodão': {
-                ciclo: 130, variacao: '120 a 150 dias', semQtd: 35, colhQtd: 2200, tipo: 'fibra', mesesIdeais: [9,10,11,12,1,2], unidade: 'Kg',
-                fases: "<li><strong>0 a 25 dias:</strong> Germinação e formação de plântulas.</li><li><strong>26 a 70 dias:</strong> Crescimento vegetativo e emergência de botões florais.</li><li><strong>71 a 130 dias:</strong> Florescimento, formação de cápsulas e maturação das fibras.</li>"
-            },
-            'Café': {
-                ciclo: 240, variacao: '210 a 270 dias', semQtd: 3500, colhQtd: 2000, tipo: 'perene', mesesIdeais: [9,10,11,12], unidade: 'Kg',
-                fases: "<li><strong>0 a 60 dias:</strong> Estabelecimento da muda e desenvolvimento radicular.</li><li><strong>61 a 180 dias:</strong> Crescimento vegetativo e formação de frutos.</li><li><strong>181 a 240 dias:</strong> Maturação dos grãos e colheita seletiva.</li>"
-            },
-            'Cana-de-açúcar': {
-                ciclo: 360, variacao: '330 a 420 dias', semQtd: 15000, colhQtd: 90000, tipo: 'perene', mesesIdeais: [1,2,3,4,5,6,7,8,9,10,11,12], unidade: 'Kg',
-                fases: "<li><strong>0 a 50 dias:</strong> Enraizamento e cobertura do solo.</li><li><strong>51 a 220 dias:</strong> Expansão vegetativa e acúmulo de biomassa.</li><li><strong>221 a 360 dias:</strong> Maturação dos colmos e preparação para corte.</li>"
-            },
             'Grama': { 
                 ciclo: 90, variacao: '60 a 90 dias', semQtd: 10000, colhQtd: 10000, tipo: 'perene', mesesIdeais: [9,10,11,12,1,2,3], unidade: 'm²',
                 fases: "<li><strong>0 a 25 dias:</strong> Pegamento dos tapetes recém desenrolados. Fase de extrema necessidade hídrica diária para o enraizamento não queimar.</li><li><strong>26 a 60 dias:</strong> Expansão lateral dos estolões. As junções entre as placas começam a 'costurar' e fecham o solo nu.</li><li><strong>61 a 90 dias:</strong> Fixação plena, coloração intensa restabelecida e liberação para a primeira poda leve.</li>"
@@ -687,7 +643,6 @@
             popularDropdownsCultura();
             carregarEstadosViaIBGE();
             if(localStorage.getItem('sysUser')) entrarNoSistema(localStorage.getItem('sysUser'));
-            alternarTelaLogin(false);
         };
 
         // Mostra Fases Dinamicamente no Modal de Planejamento
@@ -783,27 +738,9 @@
 
         // GESTÃO DE SISTEMA E LOGINS
         function alternarTelaLogin(mostraCadastro) {
-            const entrada = document.getElementById('formEntrada');
-            const cadastro = document.getElementById('formCadastro');
-            const tabEntrar = document.getElementById('tabEntrar');
-            const tabCadastrar = document.getElementById('tabCadastrar');
-            entrada.classList.toggle('esconder', mostraCadastro);
-            cadastro.classList.toggle('esconder', !mostraCadastro);
-            document.getElementById('msgErroSenha').classList.add('esconder');
-
-            if (tabEntrar && tabCadastrar) {
-                if (mostraCadastro) {
-                    tabEntrar.classList.remove('bg-emerald-50','border-emerald-200','text-emerald-900');
-                    tabEntrar.classList.add('bg-stone-100','border-stone-200','text-stone-600');
-                    tabCadastrar.classList.remove('bg-stone-100','border-stone-200','text-stone-600');
-                    tabCadastrar.classList.add('bg-emerald-50','border-emerald-200','text-emerald-900');
-                } else {
-                    tabCadastrar.classList.remove('bg-emerald-50','border-emerald-200','text-emerald-900');
-                    tabCadastrar.classList.add('bg-stone-100','border-stone-200','text-stone-600');
-                    tabEntrar.classList.remove('bg-stone-100','border-stone-200','text-stone-600');
-                    tabEntrar.classList.add('bg-emerald-50','border-emerald-200','text-emerald-900');
-                }
-            }
+            document.getElementById('formEntrada').classList.toggle('esconder', mostraCadastro);
+            document.getElementById('formCadastro').classList.toggle('esconder', !mostraCadastro);
+            document.getElementById('msgErroSenha').classList.add('esconder'); 
         }
 
         function registrarNovaConta(e) {
