@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SoloVivo - Gestão Agrícola</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -38,7 +38,10 @@
                         url('https://images.pexels.com/photos/2165688/pexels-photo-2165688.jpeg?auto=compress&cs=tinysrgb&w=1920'); 
             background-size: cover; 
             background-position: center; 
-            background-attachment: fixed;
+            background-attachment: scroll;
+        }
+        @media (min-width: 768px) {
+            .bg-login { background-attachment: fixed; }
         }
 
         /* Imagens padronizadas */
@@ -157,29 +160,27 @@
 
         <main class="flex-grow p-4 md:p-8 max-w-7xl mx-auto w-full space-y-8">
             
-            <div class="md:hidden bg-slate-950 text-white px-5 py-5 rounded-[2rem] shadow-sm border border-slate-900">
-                <div class="flex items-start gap-3 mb-4">
-                    <span class="text-3xl">💬</span>
-                    <div class="space-y-3 flex-1">
-                        <div class="bg-slate-800 px-4 py-3 rounded-[2rem] rounded-br-none text-sm leading-relaxed shadow-sm">
-                            Olá, produtor! 💚
-                        </div>
-                        <div class="bg-emerald-600 px-4 py-3 rounded-[2rem] rounded-tl-none text-sm leading-relaxed text-white shadow-sm">
-                            Toque nos cards para ver seu planejamento, clima e cadastro da propriedade.
-                        </div>
+            <div class="md:hidden bg-white border border-stone-200 px-5 py-5 rounded-[2rem] shadow-sm">
+                <div class="flex items-center justify-between gap-3 mb-4">
+                    <div>
+                        <p class="text-xs font-black uppercase tracking-widest text-emerald-600">Resumo Rápido</p>
+                        <h2 class="text-lg font-black text-stone-900 leading-tight">Seu sistema já está pronto para usar</h2>
                     </div>
+                    <span class="text-3xl">📈</span>
                 </div>
-                <div class="flex items-center justify-between gap-3 bg-slate-900/90 p-4 rounded-[1.5rem] border border-slate-800">
-                    <div class="flex items-center gap-3">
-                        <span id="lblIconeClimaMobile" class="text-2xl">📡</span>
-                        <div>
-                            <p class="text-[9px] font-black uppercase tracking-widest text-emerald-300" id="lblLocalFazendaMobile">Local ND</p>
-                            <p class="text-sm font-bold text-slate-100" id="lblDescClimaMobile">Conectando radares...</p>
-                        </div>
+                <div class="grid grid-cols-1 gap-3 text-sm text-stone-700">
+                    <div class="bg-emerald-50 border border-emerald-100 rounded-3xl p-4">
+                        <strong>Plataforma adaptada para seu celular</strong>
+                        <p class="mt-2">Design responsivo para navegação simples e rápida.</p>
                     </div>
-                    <button onclick="abrirJanela('modalPerfil')" class="bg-emerald-500 text-slate-950 font-black text-xs uppercase tracking-widest px-4 py-2 rounded-2xl shadow-sm hover:bg-emerald-400 transition-colors">
-                        Atualizar Propriedade
-                    </button>
+                    <div class="bg-stone-50 border border-stone-100 rounded-3xl p-4">
+                        <strong>Cadastro e login juntos</strong>
+                        <p class="mt-2">Use os botões no topo para alternar entre Entrar e Cadastrar.</p>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-100 rounded-3xl p-4">
+                        <strong>Clima e propriedade</strong>
+                        <p class="mt-2">Toque em Configurações para atualizar os dados da fazenda.</p>
+                    </div>
                 </div>
             </div>
 
