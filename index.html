@@ -156,20 +156,6 @@
 
         <main class="flex-grow p-4 md:p-8 max-w-7xl mx-auto w-full space-y-8">
             
-            <div class="md:hidden bg-white border border-stone-200 px-4 py-4 rounded-3xl shadow-sm">
-                <div class="flex items-center gap-3 mb-3">
-                    <span id="lblIconeClimaMobile" class="text-2xl">📡</span>
-                    <div>
-                        <p class="text-[10px] font-black text-emerald-600 uppercase tracking-widest" id="lblLocalFazendaMobile">Local ND</p>
-                        <p class="text-sm font-bold text-stone-700 leading-snug" id="lblDescClimaMobile">Conectando radares...</p>
-                    </div>
-                </div>
-                <div class="bg-stone-50 text-stone-700 p-4 rounded-3xl border border-stone-100 text-sm leading-relaxed">
-                    <p class="font-black mb-2">Resumo rápido</p>
-                    <p class="text-[13px]">Toque nos cards abaixo para acessar planejamento, lavoura, finanças, pragas e solos.</p>
-                </div>
-            </div>
-
             <section>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                     <button onclick="abrirJanela('modalPlanejamento')" class="card-soft flex flex-col items-center justify-center p-4 gap-2 group active:scale-95 border-t-4 border-blue-400">
@@ -842,13 +828,11 @@
                 const bp = JSON.parse(localStorage.getItem('sysPerfil'));
                 document.getElementById('lblNomeFazenda').innerText = bp.nome;
                 document.getElementById('lblLocalFazenda').innerText = bp.cidade;
-                document.getElementById('lblLocalFazendaMobile').innerText = bp.cidade;
                 cid = bp.cidade;
             }
 
             if(cid !== "Local ND") {
                 document.getElementById('lblDescClima').innerText = "Radares...";
-                document.getElementById('lblDescClimaMobile').innerText = "Radares...";
                 let temp = await conectarRadarClimatico(cid);
                 if(temp === null) temp = 27; 
 
@@ -856,9 +840,7 @@
                 const icone = temp >= 30 ? "☀️" : "⛅";
 
                 document.getElementById('lblIconeClima').innerText = icone;
-                document.getElementById('lblIconeClimaMobile').innerText = icone;
                 document.getElementById('lblDescClima').innerText = desc;
-                document.getElementById('lblDescClimaMobile').innerText = desc;
 
                 if(temp >= 30) {
                     document.getElementById('boxAlertaClima').classList.remove('esconder');
